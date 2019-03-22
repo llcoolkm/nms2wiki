@@ -1,0 +1,84 @@
+#
+# nm2wiki config - format YAML
+#
+
+# dokuwiki start file
+wikifile: "start.txt"
+
+# API token from LibreNMS
+token: ""
+
+# LibreNMS URL
+url: "http://librenms.example.org/api/v0/"
+
+#
+# Paths to search for devices. These can be selected as --type
+# There should be one directory before the directory that contains the
+# device directories, example:
+#
+#   network/firewall/dp-fw01:
+#   network/switches/dp-sw01:
+#   network/switches/dp-sw02:
+#
+paths:
+  servers: "/var/www/html/dokuwiki/data/pages/servers/os/"
+  storage: "/var/www/html/dokuwiki/data/pages/storage/"
+  network: "/var/www/html/dokuwiki/data/pages/network/"
+
+#
+# Format of values to write in wiki. First %s is replaced by the value from
+# LibreNMS. If there is a second %s it will be replaced by the device's name
+#
+templates:
+  hardware: "%s" # Model
+  serial: "%s"
+  version: "%s"
+  location: "[[:location:%s:start]]" # Datacenter wiki page
+  device_id: "[[http://librenms.sebot.local/device/device=%s|%s]]" # LibreNMS
+
+#
+# Translate keys to headers in wiki. Lines that start with the below values
+# will be replaced with "^Header|template|"
+#
+headers:
+  device_id: "^LibreNMS"
+  hardware: "^Hardware"
+  serial: "^Serial"
+  version: "^Firmware"
+  location: "^Location"
+
+#
+# Which values to replace selected by operating system in LibreNMS
+#
+osvalues:
+  fabos:
+    - 'device_id'
+    - 'location'
+    - 'hardware'
+    - 'version'
+  fortigate:
+    - 'device_id'
+    - 'hardware'
+    - 'serial'
+    - 'version'
+  procurve:
+    - 'device_id'
+    - 'hardware'
+    - 'serial'
+    - 'version'
+  vmware:  
+    - 'device_id'
+    - 'hardware'
+    - 'version'
+    - 'serial'
+  windows:  
+    - 'device_id'
+    - 'version'
+  linux:  
+    - 'device_id'
+    - 'location'
+  freebsd:  
+    - 'device_id'
+    - 'location'
+
+# EOF
